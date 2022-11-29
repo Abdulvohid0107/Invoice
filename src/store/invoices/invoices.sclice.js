@@ -16,5 +16,9 @@ export const { actions: invoicesActions, reducer: invoicesReducer } =
         state.loading = false;
         state.invoicesList = action.payload;
       },
+      setError: (state, {payload}) => {
+        state.error = payload;
+        state.loading = false
+      }
     },
   });
