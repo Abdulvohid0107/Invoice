@@ -1,8 +1,32 @@
 .invoices-item {
   margin-bottom: 16px;
+  border: #FFFFFF solid 1px;
+  transition: 0.3s ease all;
+  border-radius: 9px;
+  position: relative;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  & * {
+    text-decoration: none;
+  }
+
+  &:hover {
+    border: #7C5DFA solid 1px;
+    transform: scale(1.1);
+  }
+
+  &::after{
+    content: '';
+    position: absolute;
+    background: url("../../assets/icons/arrow.svg") no-repeat center center;
+    background-size: cover;
+    width: 8px;
+    height: 12px;
+    right: 24px;
+    top: 30px;
   }
 }
 
@@ -16,6 +40,7 @@
   margin: 0;
   font-size: 12px;
   font-weight: 700;
+  color: #0C0E16;
 }
 
 .invoices-item__id-span {
@@ -28,13 +53,13 @@
 }
 
 .invoices-item__due {
-  color:#888EB0;
+  color: #888EB0;
   margin-right: 4px;
 }
 
 .invoices-item__to {
   margin: 0;
-  color:#858BB2;
+  color: #858BB2;
   line-height: 15px;
 }
 
@@ -42,6 +67,7 @@
   display: flex;
   align-items: center;
   gap: 40px;
+  margin-right: 20px;
 }
 
 .invoice-item__money {
@@ -49,6 +75,7 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
+  color: #0C0E16;
 }
 
 
@@ -59,11 +86,11 @@
   padding: 13px 29px 13px 46px;
   border-radius: 6px;
   background-color: rgba(180, 255, 230, 0.219);
-  color:#33D69F;
+  color: #33D69F;
   font-weight: 700;
   position: relative;
 
-  &::before{
+  &::before {
     content: '';
     position: absolute;
     left: 30px;
@@ -74,13 +101,13 @@
     border-radius: 50%;
   }
 
-  &--pending{
+  &--pending {
     padding-left: 34px;
     padding-right: 21px;
-    background-color:rgba(240, 200, 148, 0.219);
+    background-color: rgba(240, 200, 148, 0.219);
     color: #FF8F00;
 
-    &::before{
+    &::before {
       background: #FF8F00;
       left: 18px;
     }

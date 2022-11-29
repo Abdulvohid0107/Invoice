@@ -1,8 +1,9 @@
-import { InvoicesPage } from "./pages";
+import { Routes } from "./routes";
 
 function App() {
   return (
-    <InvoicesPage></InvoicesPage>
+    // <InvoicesPage></InvoicesPage>
+    <Routes/>
   );
 }
 
