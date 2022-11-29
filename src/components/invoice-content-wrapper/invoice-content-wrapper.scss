@@ -1,5 +1,8 @@
-.invoice-content-wrapper {
+.invoice-content-wrapper__invoice {
   display: flex;
   align-items: center;
-  
+  justify-content: space-between;
+  padding: 16px 24px 16px 32px;
+  background-color: #FFFFFF;
+  border-radius: 9px;
 }

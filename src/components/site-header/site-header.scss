@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 65px;
 }
 
 .site-header__title-wrapper {
@@ -39,4 +40,17 @@
 .site-header__option {
   border: none;
   background-color: transparent;
+}
+
+.site-header--button::before {
+  content: '';
+  padding: 10px;
+  background: url(../../assets/icons/plus.svg) no-repeat center center;  
+  background-size: 10px 10px;
+  background-color:#FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
 }

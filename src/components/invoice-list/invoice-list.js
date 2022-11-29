@@ -8,7 +8,7 @@ export const InvoiceList = () => {
   return (
     <>
       <h2 className="visually-hidden">List of invoices</h2>
-      <ul className="inovice-list">
+      <ul className="invoice-list">
         {invoicesList?.map((invoice) => (
           <InvoiceItem key={invoice.id} invoice={invoice} />
         ))}
