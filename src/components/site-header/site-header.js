@@ -23,7 +23,7 @@ export const SiteHeader = () => {
             </picture>
             <h1 className="visually-hidden">Invoices</h1>
             <p className="site-header__invoice-length">
-              There are {invoicesList?.length} total invoices
+              There are {invoicesList?.length || 0} total invoices
             </p>
           </div>
 

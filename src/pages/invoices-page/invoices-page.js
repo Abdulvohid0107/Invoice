@@ -33,6 +33,7 @@ export const InvoicesPage = () => {
         <SideBar />
         <Container>
           <InvoiceList />
+          {error && <p>error</p>}
         </Container>
       </main>
     </>

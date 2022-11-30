@@ -77,39 +77,3 @@
   line-height: 24px;
   color: #0C0E16;
 }
-
-
-
-.invoice-item__paid-status,
-.invoice-item__paid-status--pending {
-  margin: 0;
-  padding: 13px 29px 13px 46px;
-  border-radius: 6px;
-  background-color: rgba(180, 255, 230, 0.219);
-  color: #33D69F;
-  font-weight: 700;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 30px;
-    bottom: 15px;
-    width: 8px;
-    height: 8px;
-    background: #33D69F;
-    border-radius: 50%;
-  }
-
-  &--pending {
-    padding-left: 34px;
-    padding-right: 21px;
-    background-color: rgba(240, 200, 148, 0.219);
-    color: #FF8F00;
-
-    &::before {
-      background: #FF8F00;
-      left: 18px;
-    }
-  }
-}

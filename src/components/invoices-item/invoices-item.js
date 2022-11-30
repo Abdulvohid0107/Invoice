@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { InvoiceContentWrapper } from "../invoice-content-wrapper/invoice-content-wrapper";
+import { InvoiceContentWrapper } from "../invoice-content-wrapper";
+import { PaidStatus } from "../paid-status";
 import "./invoices-item.scss";
 
 export const InvoiceItem = (props) => {
@@ -10,7 +11,7 @@ export const InvoiceItem = (props) => {
 
   return (
     <li className="invoices-item">
-        <Link to={"/view-invoice/:id"}>
+      <Link to={`/view-invoice/${id}`}>
         <InvoiceContentWrapper>
           <div className="invoices-item__info-wrapper">
             <h3 className="invoices-item__id">
@@ -25,18 +26,10 @@ export const InvoiceItem = (props) => {
           </div>
           <div className="invoices-item__money-wrapper">
             <h3 className="invoice-item__money">£{price}</h3>
-            <p
-              className={
-                paid
-                  ? "invoice-item__paid-status"
-                  : "invoice-item__paid-status--pending"
-              }
-            >
-              {paid ? "Paid" : "Pending"}
-            </p>
+            <PaidStatus>{paid ? "Paid" : "Pending"}</PaidStatus>
           </div>
         </InvoiceContentWrapper>
-    </Link>
-      </li>
+      </Link>
+    </li>
   );
 };

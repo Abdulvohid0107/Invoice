@@ -1,0 +1,36 @@
+.view-page--status-content-wrapper{
+  padding: 20px 32px;
+}
+
+.view-page__status-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.view-page__status {
+  margin: 0;
+  color: #858BB2;
+}
+
+.view-page__buttons-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-page--edit-btn {
+  padding: 17px 24px;
+  background-color: #F9FAFE;
+  color:#7E88C3;
+}
+
+.view-page--delete-btn {
+  padding: 17px 24px;
+  background-color: #EC5757;
+}
+
+.view-page--mark-btn {
+  padding: 17px 24px;
+  // background-color: ;
+}

@@ -1,0 +1,24 @@
+.go-back__link {
+  position: relative;
+  color: #0C0E16;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 30px;
+  display: inline-block;
+  transition: 0.4s ease all;
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: url("../../assets/icons/arrow.svg") no-repeat center center;
+    width: 4px;
+    height: 8px;
+    transform: rotate(180deg);
+    left: 0;
+  }
+
+  &:hover{
+    color: #7E88C3;
+    transform: scale(1.1);
+  }
+}
