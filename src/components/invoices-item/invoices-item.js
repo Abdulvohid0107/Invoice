@@ -25,7 +25,7 @@ export const InvoiceItem = (props) => {
             <p className="invoices-item__to">{to}</p>
           </div>
           <div className="invoices-item__money-wrapper">
-            <h3 className="invoice-item__money">£{price}</h3>
+            <h3 className="invoice-item__money">£ {price}</h3>
             <PaidStatus>{paid ? "Paid" : "Pending"}</PaidStatus>
           </div>
         </InvoiceContentWrapper>

@@ -39,7 +39,7 @@ export const SiteHeader = () => {
                 Paid
               </option>
             </select>
-            <Button children={"New Invoice"} className="site-header--button" />
+            <Button to={"/add"} children={"New Invoice"} className="site-header--button" />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
-import "./invoice-content-wrapper.scss"
+import "./invoice-content-wrapper.scss";
 
-export const InvoiceContentWrapper = ({children, className = ""}) => {
+export const InvoiceContentWrapper = ({ children, className = "" }) => {
   return (
-    <div className={"invoice-content-wrapper__invoice " + className}>{children}</div>
-  )
-}
+    <div className={"invoice-content-wrapper " + className}>{children}</div>
+  );
+};

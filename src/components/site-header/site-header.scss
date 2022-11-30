@@ -42,15 +42,19 @@
   background-color: transparent;
 }
 
-.site-header--button::before {
-  content: '';
-  padding: 10px;
-  background: url(../../assets/icons/plus.svg) no-repeat center center;  
-  background-size: 10px 10px;
-  background-color:#FFFFFF;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 16px;
-  width: 32px;
-  height: 32px;
+.site-header--button {
+  text-decoration: none;
+
+  &::before {
+    content: '';
+    padding: 10px;
+    background: url(../../assets/icons/plus.svg) no-repeat center center;
+    background-size: 10px 10px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 16px;
+    width: 32px;
+    height: 32px;
+  }
 }

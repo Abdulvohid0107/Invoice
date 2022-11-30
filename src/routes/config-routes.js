@@ -1,6 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import { InvoicesPage } from "../pages";
-import { ViewInvoicePage } from "../pages/view-invoice-page/view-invoice-page";
+import { InvoicesPage, AddInvoice, ViewInvoicePage } from "../pages";
 
 const routes = [
   {
@@ -8,17 +7,22 @@ const routes = [
     element: <InvoicesPage />,
   },
   {
+    path: "/add",
+    element: <AddInvoice />,
+  },
+  {
     path: "/view-invoice/:id",
     children: [
       {
         path: "",
-        element: <ViewInvoicePage />
-      }
-    ]
-  }
+        element: <ViewInvoicePage />,
+      },
+    ],
+  },
+ 
 ];
 
 export const Routes = () => {
-  const elements = useRoutes(routes)
-  return elements
-}
+  const elements = useRoutes(routes);
+  return elements;
+};
