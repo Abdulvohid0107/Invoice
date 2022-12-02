@@ -1,4 +1,51 @@
-.input{
-  padding: 5px 10px;
-  margin-bottom: 15px;
+.input {
+  margin-bottom: 23px;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.input__label-wrapper {
+  display: flex;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.input__label {
+  color: #7E88C3;
+}
+
+.input__warning {
+  margin: 0;
+  color: #f00;
+}
+
+.input__input {
+  padding: 15px 20px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  border: #DFE3FA solid 1px;
+  width: 100%;
+  transition: 0.3s ease all;
+  font-weight: 700;
+
+
+  &:hover {
+    border: #a4a9c7 solid 1px;
+  }
+
+  &--error{
+    border-color: #f00;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }

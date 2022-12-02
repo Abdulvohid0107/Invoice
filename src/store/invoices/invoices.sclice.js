@@ -19,6 +19,11 @@ export const { actions: invoicesActions, reducer: invoicesReducer } =
       setError: (state, {payload}) => {
         state.error = payload;
         state.loading = false
+      },
+      addInvoice: (state, {payload}) => {
+        if (state.invoicesList) {
+          state.invoicesList = [...state.invoicesList, payload]
+        }
       }
     },
   });

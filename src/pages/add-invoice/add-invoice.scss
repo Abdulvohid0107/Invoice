@@ -1,0 +1,36 @@
+.add-invoice--content {
+  margin: 0 auto;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  width: 631px;
+  padding: 51px 56px 32px;
+}
+
+.invoice-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.add-invoice__title{
+  margin: 0;
+  margin-bottom: 35px;
+  font-size: 24px;
+}
+
+.add-invoice--add-btn{
+  padding: 16px 24px;
+}
+
+.add-invoice--discard-btn{
+  padding: 16px 24px;
+  color:#7E88C3;
+  background: #F9FAFE;
+  text-decoration: none;
+}
+
+.add-invoice__btn-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

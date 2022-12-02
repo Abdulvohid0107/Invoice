@@ -6,3 +6,4 @@ export * from "./paid-status";
 export * from "./go-back";
 export * from "./invoice-content-wrapper";
 export * from "./input"
+export * from "./invoice-form"

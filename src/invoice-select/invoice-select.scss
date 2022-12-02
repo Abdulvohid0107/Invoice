@@ -1,0 +1,22 @@
+.invoice-select__label {
+  color: #7E88C3;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.invoice-select__select {
+  width: 100%;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  border: #DFE3FA solid 1px;
+  width: 245px;
+  transition: 0.3s ease all;
+  font-weight: 700;
+  padding: 15px 15px 15px 20px;
+  margin-bottom: 23px;
+}
+
+.invoice-select__option {
+  font-weight: 700;
+}

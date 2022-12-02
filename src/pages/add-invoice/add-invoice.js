@@ -1,51 +1,68 @@
-import { Input } from "../../components";
+import { useDispatch } from "react-redux";
+import {
+  InoviceForm,
+  InvoiceContentWrapper,
+  Container,
+  Button,
+} from "../../components";
+import { API_URL } from "../../consts";
+import { invoicesActions } from "../../store/invoices";
 import "./add-invoice.scss";
-import { Formik, Form } from "formik";
-import * as yup from "yup";
 
 export const AddInvoice = () => {
+  
+  var currentTime = new Date();
+  const time = `${currentTime.getDay()}-${currentTime.getDate()}-${currentTime.getFullYear()}`
+
+  const dispatch = useDispatch()
+
+  const handleFormSubmit = (values) => {
+    console.log(values);
+    const newInvoice = {
+      userId: 1,
+      paid: true,
+      email: values.email,
+      to: values.clientname,
+      dueDate: values.date,
+      term: values.terms,
+      createdDate: time,
+      description: values.project,
+      price: values.price,
+      id: Math.floor(Math.random() * 1000)
+    };
+    console.log(newInvoice);
+
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(newInvoice),
+      headers: {"Content-type" : "Application/json"}
+    }).then(res => {
+      if (res.status === 201) {
+        return res.json()
+      }
+      return Promise.reject(res)
+    }).then(data => {
+      dispatch(invoicesActions.addInvoice(data))
+    })
+  };
+
   return (
-    <>
-      <Formik
-        initialValues={{
-          clientname: "",
-          email: "",
-          roject: "",
-          price: "",
-        }}
-        validationSchema={yup.object().shape({
-          clientname: yup
-            .string()
-            .required("Fill")
-            .min(4, "min 4")
-            .max(10, "max 10"),
-        })}
-      >
-        {() => (
-          <Form
-            autoComplete="off"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: 400,
-              margin: "40px auto",
-            }}
-          >
-            <Input type="text" name="clientname" placeholder="Name" />
-            <Input type="email" name="email" placeholder="email" />
-            <Input type="date" />
-            <select name="terms">
-              <option value="">Net 1 Day</option>
-              <option value="">Net 7 Days</option>
-              <option value="">Net 14 Days</option>
-              <option value="">Net 30 Days</option>
-            </select>
-            <Input type="text" name="project" placeholder="project" />
-            <Input type="number" name="price" placeholder="price" />
-            <button>submit</button>
-          </Form>
-        )}
-      </Formik>
-    </>
+    <Container>
+      <div className="add-invoice">
+        <InvoiceContentWrapper className="add-invoice--content">
+          <h1 className="add-invoice__title">New Invoice</h1>
+          <InoviceForm onSubmit={handleFormSubmit}>
+            <div className="add-invoice__btn-wrapper">
+              <Button to={"/"} className="add-invoice--discard-btn">
+                Discard
+              </Button>
+              <Button type="submit" className="add-invoice--add-btn">
+                Save & Send
+              </Button>
+            </div>
+          </InoviceForm>
+        </InvoiceContentWrapper>
+      </div>
+    </Container>
   );
 };
