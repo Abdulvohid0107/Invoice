@@ -1,12 +1,15 @@
-import "./site-header.scss";
-import { Container } from "../container";
+import { useSelector } from "react-redux";
 import invoices from "../../assets/images/invoices.svg";
 import invoiceswebp from "../../assets/images/invoices.webp";
 import { Button } from "../button";
-import { useSelector } from "react-redux";
+import { Container } from "../container";
+import "./site-header.scss";
+
 
 export const SiteHeader = () => {
   const { invoicesList } = useSelector((state) => state.invoices);
+  const user = useSelector((state) => state.user.user)
+
 
   return (
     <Container>
@@ -39,7 +42,7 @@ export const SiteHeader = () => {
                 Paid
               </option>
             </select>
-            <Button to={"/add"} children={"New Invoice"} className="site-header--button" />
+            <Button to={user ? "/add" : "/login"} children={"New Invoice"} className="site-header--button" />
           </div>
         </div>
       </div>

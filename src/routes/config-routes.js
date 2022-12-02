@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import { InvoicesPage, AddInvoice, ViewInvoicePage } from "../pages";
+import { InvoicesPage, AddInvoice, ViewInvoicePage, Login } from "../pages";
 
 const routes = [
   {
@@ -19,6 +19,10 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login />
+  }
  
 ];
 

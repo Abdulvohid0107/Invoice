@@ -82,7 +82,7 @@ export const InoviceForm = ({children, onSubmit}) => {
             name="price"
             placeholder="780"
             id="projectId"
-          />
+          />  
           {children}
           {/* <button type="submit">submit</button> */}
         </Form>
