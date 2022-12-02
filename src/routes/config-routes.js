@@ -1,5 +1,6 @@
+import { useSelector } from "react-redux";
 import { useRoutes } from "react-router-dom";
-import { InvoicesPage, AddInvoice, ViewInvoicePage, Login } from "../pages";
+import { InvoicesPage, AddInvoice, ViewInvoicePage, Login, NotFound } from "../pages";
 
 const routes = [
   {
@@ -20,13 +21,23 @@ const routes = [
     ],
   },
   {
-    path: "/login",
-    element: <Login />
-  }
- 
+    path: "*",
+    element: <NotFound/>
+  },
 ];
 
 export const Routes = () => {
-  const elements = useRoutes(routes);
+  const user = useSelector((state) => state.user.user);
+  const elements = useRoutes([
+    ...(!user
+      ? [
+          {
+            path: "/login",
+            element: <Login />,
+          },
+        ]
+      : []),
+    ...routes,
+  ]);
   return elements;
 };

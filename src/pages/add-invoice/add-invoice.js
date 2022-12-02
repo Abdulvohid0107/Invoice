@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   InoviceForm,
   InvoiceContentWrapper,
@@ -10,11 +10,12 @@ import { invoicesActions } from "../../store/invoices";
 import "./add-invoice.scss";
 
 export const AddInvoice = () => {
-  
   var currentTime = new Date();
-  const time = `${currentTime.getDay()}-${currentTime.getDate()}-${currentTime.getFullYear()}`
+  const time = `${currentTime.getDay()}-${currentTime.getDate()}-${currentTime.getFullYear()}`;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const token = useSelector(state => state.user.token)
 
   const handleFormSubmit = (values) => {
     console.log(values);
@@ -28,22 +29,25 @@ export const AddInvoice = () => {
       createdDate: time,
       description: values.project,
       price: values.price,
-      id: Math.floor(Math.random() * 1000)
+      id: Math.floor(Math.random() * 1000),
     };
     console.log(newInvoice);
 
     fetch(API_URL, {
       method: "POST",
       body: JSON.stringify(newInvoice),
-      headers: {"Content-type" : "Application/json"}
-    }).then(res => {
-      if (res.status === 201) {
-        return res.json()
-      }
-      return Promise.reject(res)
-    }).then(data => {
-      dispatch(invoicesActions.addInvoice(data))
+      headers: { "Content-type": "Application/json",
+                  Authorization: `Bearer ${token}` }
     })
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      })
+      .then((data) => {
+        dispatch(invoicesActions.addInvoice(data));
+      });
   };
 
   return (

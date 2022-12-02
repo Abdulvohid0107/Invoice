@@ -1,26 +1,53 @@
 import { Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import * as yup from "yup";
-import { Button, Container, Input, InvoiceContentWrapper } from "../../components";
+import {
+  Button,
+  Container,
+  Input,
+  InvoiceContentWrapper,
+} from "../../components";
 import { userActions } from "../../store/user";
 import "./login.scss";
 
-
 export const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [error, setError] = useState("")
+
+  const token = useSelector(state => state.user.token)
 
   const handleLoginSubmit = (values) => {
     const user = {
       email: values.email,
-      password: values.password
-    }
+      password: values.password,
+    };
 
-    dispatch(userActions.setUser(user))
-    navigate("/")
-  }
+    fetch("http://167.235.158.238:3001/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(user)
+    }).then(res => {
+      if (res.status === 200) {
+        return  res.json()
+      }
+      return Promise.reject(res)
+    }).then(data => {
+      console.log(data);
+      dispatch(userActions.setUser(data));
+      navigate("/");
+    })
+    .catch(err => {
+      setError("Something went wrong :(")
+    });
+
+  };
 
   return (
     <Container>
@@ -28,7 +55,7 @@ export const Login = () => {
         <h1 className="login__title">Login</h1>
         <Formik
           initialValues={{
-            email: "sayfulloh123@gmail.com",
+            email: "nurulloh23@gmail.com",
             password: "nurulloh23",
           }}
           validationSchema={yup.object().shape({
@@ -52,7 +79,10 @@ export const Login = () => {
                 label="Password"
                 id="passwordId"
               />
-        <Button type="submit" className="login__button">Login</Button>
+              <Button type="submit" className="login__button">
+                Login
+              </Button>
+              {error && <span>{error}</span>}
             </Form>
           )}
         </Formik>

@@ -13,10 +13,8 @@
   border-bottom-right-radius: 20px;
 }
 
-.side-bar__img-wrapper{  
-}
-
-.side-bar__user-img-wrapper{  
+.side-bar__user-img-wrapper,
+.side-bar__user-img-wrapper--brat{  
   background-color: #FFFFFF;
   padding: 10px;
   margin: 0 auto;
@@ -32,6 +30,10 @@
     top: -24px;
     left: -32px;
     background-color: #494E6E;
+  }
+
+  &--brat{
+    padding: 0;
   }
 }
 
