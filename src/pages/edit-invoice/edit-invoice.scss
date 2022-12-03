@@ -1,0 +1,25 @@
+.edit-invoice{
+  margin-bottom: 50px;
+}
+
+.edit-invoice__id{
+  color: #888EB0;
+}
+
+.edit-invoice__btn-wrapper{
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.edit-invoice--cancel-btn{
+  padding: 17px 25px;
+  background:#F9FAFE;
+  color: #7E88C3;
+  text-decoration: none;
+}
+
+.edit-invoice--changes-btn{
+  padding: 17px 25px;
+
+}

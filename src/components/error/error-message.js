@@ -1,7 +1,7 @@
 import "./error-message.scss"
 
-export const ErrorMessage = ({children}) => {
+export const ErrorMessage = () => {
   return (
-    <div className="error">{children}</div>
+    <div className="error">Upps, something went wrong :(</div>
   )
 }

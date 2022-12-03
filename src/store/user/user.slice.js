@@ -4,8 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const { actions: userActions, reducer: userReducer } = createSlice({
   name: "user",
   initialState: {
-    user:
-      localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")),
+    user: localStorage.getItem("user") && JSON.parse(localStorage.getItem("user")),
     token: localStorage.getItem("token"), // local storage'ga token degan narsani saqlab qo'yamiz
   },
   reducers: {

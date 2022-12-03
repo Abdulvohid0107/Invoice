@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import { useRef } from "react";
 import * as yup from "yup";
-import { InvoiceSelect } from "../../invoice-select/invoice-select";
+import { InvoiceSelect } from "../invoice-select";
 import { Input } from "../input";
 import "./invoice-form.scss";
 
@@ -28,10 +28,10 @@ export const InoviceForm = ({children, onSubmit, initialValues = {}}) => {
         clientname: yup
           .string()
           .required("Can't be empty")
-          .min(4, "maximum 4 symbols")
+          .min(3, "maximum 3 symbols")
           .max(50, "maximum 50 symbols"),
 
-        email: yup.string().required("Can't be empty").email(),
+        email: yup.string().required("Can't be empty").email("write an email"),
         date: yup.date().required("Can't be empty"),
         // terms: yup.number().required(),
         project: yup.string(),
@@ -44,7 +44,6 @@ export const InoviceForm = ({children, onSubmit, initialValues = {}}) => {
       validateOnChange={false} // forma to'ldirilgan payit validatsiya qilinadigan bo'ladigan bo'lsa, lekin formalar juda ko'p bo'ladigan bo'lsa bu kompyuterni qotishiga olib keladi. validateonchange bilan inputga yozilgan payit tekshirmasligini bildirib qo'yamiz. Qisqa qilib aytganda, agar forma kotta bo'ladigan bo'lsa validateOnChange'ni fasle qilib qo'ygan yaxshi
       validateOnBlur={false} // qachonki input'dan focus qoshirilgan payut u tekshiradi
       onSubmit={handleFormSubmit}
-      // validator={() => ({})}
     >
       {() => (
         <Form autoComplete="off" className="invoice-form">

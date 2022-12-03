@@ -7,20 +7,20 @@ import {
   Button,
   Container,
   Input,
-  InvoiceContentWrapper
+  InvoiceContentWrapper,
 } from "../../components";
-import { axiosInstance } from "../../services/axios";
-import { userActions } from "../../store/user";
+import { axiosInstance } from "../../services";
+import { userActions } from "../../store";
 import "./login.scss";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [error, setError] = useState("")
-  const location = useLocation()
+  const [error, setError] = useState("");
+  const location = useLocation();
 
-  const token = useSelector(state => state.user.token)
+  const token = useSelector((state) => state.user.token);
 
   const handleLoginSubmit = (values) => {
     const user = {
@@ -28,29 +28,36 @@ export const Login = () => {
       password: values.password,
     };
 
-    fetch("http://167.235.158.238:3001/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(user)
-    }).then(res => {
-      if (res.status === 200) {
-        return  res.json()
-      }
-      return Promise.reject(res)
-    }).then(data => {
-      console.log(data);
-      dispatch(userActions.setUser(data));
-      axiosInstance.defaults.headers.Authorization = `Bearer ${data.accessToken}`
-    })
-    .catch(err => {
-      setError("Something went wrong :(")
-    }).finally(() => {
-      navigate(location.state?.redirect || "/");
-    });
+    // fetch("http://167.235.158.238:3001/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //     Authorization: `Bearer ${token}`
+    //   },
+    //   body: JSON.stringify(user)
+    // }).then(res => {
+    //   if (res.status === 200) {
+    //     return  res.json()
+    //   }
+    //   return Promise.reject(res)
+    // }).then(data => {
+    //   console.log(data);
+    //   dispatch(userActions.setUser(data));
+    //   axiosInstance.defaults.headers.Authorization = `Bearer ${data.accessToken}`
+    // })
+    // .catch(err => {
+    //   setError("Something went wrong :(")
+    // }).finally(() => {
+    //   navigate(location.state?.redirect || "/");
+    // });
 
+    axiosInstance
+      .post("/login", user)
+      .then(
+        (data) => dispatch(userActions.setUser(data.data)),
+      ).finally(() => {
+          navigate(location.state?.redirect || "/");
+        });
   };
 
   return (
@@ -64,7 +71,10 @@ export const Login = () => {
           }}
           validationSchema={yup.object().shape({
             email: yup.string().email(),
-            password: yup.string(),
+            password: yup
+              .string()
+              .min(3, "at least 3 sybmols")
+              .max(15, "no more than 15 symbols"),
           })}
           onSubmit={handleLoginSubmit}
         >

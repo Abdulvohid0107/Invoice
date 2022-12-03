@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useRoutes } from "react-router-dom";
-import { InvoicesPage, AddInvoice, ViewInvoicePage, Login, NotFound } from "../pages";
-import { EditInvoice } from "../pages";
+import { InvoicesPage, AddInvoice, ViewInvoicePage, Login, NotFound, EditInvoice } from "../pages";
 
 const routes = [
   {

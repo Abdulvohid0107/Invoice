@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, SideBar, SiteHeader } from "../../components";
-import { InvoiceList } from "../../components/invoice-list/invoice-list";
-import { Spinner } from "../../components/spinner/spinner";
-import { axiosInstance } from "../../services/axios";
-import { invoicesActions } from "../../store/invoices";
+import {
+  Container,
+  NoInvoice,
+  SideBar,
+  SiteHeader,
+  ErrorMessage,
+  InvoiceList,
+  Spinner,
+} from "../../components";
+import { axiosInstance } from "../../services";
+import { invoicesActions } from "../../store";
 
 export const InvoicesPage = () => {
   const dispatch = useDispatch();
 
-  const [filterValue, setFilterValue] = useState()
+  const [filterValue, setFilterValue] = useState();
 
   const { invoicesList, loading, error } = useSelector(
     (state) => state.invoices
@@ -26,24 +32,30 @@ export const InvoicesPage = () => {
   // }, []);
 
   useEffect(() => {
- 
     // if (filterValue === "") filterValue = ""
     // else if (filterValue === "true") filterValue = "true"
     // else if (filterValue === "false") filterValue = "false"
     // if (!invoicesList) {
-      axiosInstance.get(`/invoices`, {
+    dispatch(invoicesActions.setLoading());
+    axiosInstance
+      .get(`/invoices`, {
         params: {
-          paid_like: filterValue
-        }
-      }).then((data) => {
-        dispatch(invoicesActions.setInovices(data.data))
+          paid: filterValue,
+        },
       })
-    // } 
-  }, [filterValue])
+      .then((data) => {
+        dispatch(invoicesActions.setInovices(data.data));
+      })
+      .catch((err) => {
+        dispatch(invoicesActions.setError(err));
+        console.log(dispatch(invoicesActions.setError(err)));
+      });
+    // }
+  }, [filterValue]);
 
   const handleFilterChange = (evt) => {
-    setFilterValue(evt.target.value)
-  }
+    setFilterValue(evt.target.value);
+  };
 
   if (loading) return <Spinner />;
 
@@ -55,8 +67,9 @@ export const InvoicesPage = () => {
       <main>
         <SideBar />
         <Container>
+          {invoicesList?.length === 0 ? <NoInvoice /> : ""}
           <InvoiceList />
-          {error && <p>error</p>}
+          {error && <ErrorMessage />}
         </Container>
       </main>
     </>

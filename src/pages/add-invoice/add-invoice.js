@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
+  ErrorMessage,
   GoBack,
   InoviceForm,
   InvoiceContentWrapper,
   SideBar,
 } from "../../components";
 import { API_URL } from "../../consts";
-import { axiosInstance } from "../../services/axios";
-import { invoicesActions } from "../../store/invoices";
+import { axiosInstance } from "../../services";
+import { invoicesActions } from "../../store";
 import "./add-invoice.scss";
 
 export const AddInvoice = () => {
@@ -21,10 +22,14 @@ export const AddInvoice = () => {
   const navigate = useNavigate();
 
   const token = useSelector((state) => state.user.token);
+  const user = useSelector((state) => state.user.user);
+  const { error } = useSelector(
+    (state) => state.invoices
+  );
 
   const handleFormSubmit = (values) => {
     const newInvoice = {
-      userId: 1,
+      userId: user.id,
       paid: false,
       email: values.email,
       to: values.clientname,
@@ -58,7 +63,7 @@ export const AddInvoice = () => {
     axiosInstance.post("/invoices", newInvoice).then((data) => {
       dispatch(invoicesActions.addInvoice(data.data));
       navigate("/");
-    });
+    }).catch((err) => dispatch(invoicesActions.setError(err)));
   };
 
   return (
@@ -88,6 +93,7 @@ export const AddInvoice = () => {
               </Button>
             </div>
           </InoviceForm>
+              {error && <ErrorMessage/>}
         </InvoiceContentWrapper>
       </div>
     </Container>

@@ -4,7 +4,6 @@ import "./input.scss";
 
 export const Input = forwardRef(({name, id, label, ...restProps}, ref) => {
   const [field, meta] = useField(name);
-  // console.log(meta);
   return (
     <div className="input">
       <div className="input__label-wrapper">

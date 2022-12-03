@@ -8,8 +8,8 @@ import {
   PaidStatus, SideBar
 } from "../../components";
 import { API_URL } from "../../consts";
-import { axiosInstance } from "../../services/axios";
-import { invoicesActions } from "../../store/invoices/invoices.sclice";
+import { axiosInstance } from "../../services";
+import { invoicesActions } from "../../store";
 import "./view-invoice-page.scss";
 
 export const ViewInvoicePage = () => {
@@ -21,16 +21,19 @@ export const ViewInvoicePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(API_URL + "/" + id)
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        return Promise.reject(res);
-      })
-      .then((data) => {
-        setCurrentInvoice(data);
-      });
+    // fetch(API_URL + "/" + id)
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       return res.json();
+    //     }
+    //     return Promise.reject(res);
+    //   })
+    //   .then((data) => {
+    //     setCurrentInvoice(data);
+    //   });
+
+    axiosInstance.get(`/invoices/${id}`).then(data => setCurrentInvoice(data.data))
+
   }, [id]);
 
   if (!currentInvoice) {
@@ -63,7 +66,7 @@ export const ViewInvoicePage = () => {
   const handleMarkClick = () => {
 
     const markPaid = {
-      userId: 1,
+      userId: user.id,
       paid: true
     }
 
@@ -95,10 +98,14 @@ export const ViewInvoicePage = () => {
             <Button
               to={user ? "edit" : "/login"}
               className="view-page--edit-btn"
+              state={{
+                redirect: !user && "/add",
+              }}
             >
               Edit
             </Button>
             <Button
+              to={user? "" : "/login"}
               onClick={handleDeleteClick}
               className="view-page--delete-btn"
             >
