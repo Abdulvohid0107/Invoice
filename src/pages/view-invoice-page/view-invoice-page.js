@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../consts";
 import {
   Button,
@@ -10,10 +10,17 @@ import {
   PaidStatus,
 } from "../../components";
 import "./view-invoice-page.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { invoicesActions } from "../../store/invoices/invoices.sclice";
 
 export const ViewInvoicePage = () => {
   const { id } = useParams();
   const [currentInvoice, setCurrentInvoice] = useState();
+  const dispatch = useDispatch()
+  const token = useSelector((state) => state.user.token);
+  const user = useSelector((state) => state.user.user)
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     fetch(API_URL + "/" + id)
@@ -32,6 +39,24 @@ export const ViewInvoicePage = () => {
     return <p>error</p>;
   }
 
+  const handleDeleteClick = () => {
+    fetch(API_URL + "/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json()
+      }
+      return Promise.reject(res)
+    }).then(() => {
+      dispatch(invoicesActions.deleteInvoice(id))
+      navigate("/")
+    })
+  }
+
   return (
     <Container>
       <SideBar />
@@ -44,9 +69,10 @@ export const ViewInvoicePage = () => {
             <PaidStatus>{currentInvoice.paid ? "Paid" : "Pending"}</PaidStatus>
           </div>
           <div className="view-page__buttons-wrapper">
-            <Button className="view-page--edit-btn">Edit</Button>
-            <Button className="view-page--delete-btn">Delete</Button>
-            <Button className="view-page--mark-btn">Mark as Paid</Button>
+            <Button to={user? "edit" : "/login"} className="view-page--edit-btn">Edit</Button>
+            <Button onClick={handleDeleteClick} className="view-page--delete-btn">Delete</Button>
+            {!currentInvoice.paid ? <Button className="view-page--mark-btn">Mark as Paid</Button> : "" }
+            
           </div>
         </InvoiceContentWrapper>
 

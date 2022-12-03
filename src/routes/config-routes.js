@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useRoutes } from "react-router-dom";
 import { InvoicesPage, AddInvoice, ViewInvoicePage, Login, NotFound } from "../pages";
+import { EditInvoice } from "../pages";
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
         path: "",
         element: <ViewInvoicePage />,
       },
+      {
+        path: "edit",
+        element: <EditInvoice/>
+      }
     ],
   },
   {

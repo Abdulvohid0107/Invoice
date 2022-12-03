@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
+  Button,
+  Container,
   InoviceForm,
   InvoiceContentWrapper,
-  Container,
-  Button,
+  SideBar,
 } from "../../components";
 import { API_URL } from "../../consts";
 import { invoicesActions } from "../../store/invoices";
@@ -14,11 +16,11 @@ export const AddInvoice = () => {
   const time = `${currentTime.getDay()}-${currentTime.getDate()}-${currentTime.getFullYear()}`;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const token = useSelector(state => state.user.token)
+  const token = useSelector((state) => state.user.token);
 
   const handleFormSubmit = (values) => {
-    console.log(values);
     const newInvoice = {
       userId: 1,
       paid: true,
@@ -31,13 +33,14 @@ export const AddInvoice = () => {
       price: values.price,
       id: Math.floor(Math.random() * 1000),
     };
-    console.log(newInvoice);
 
     fetch(API_URL, {
       method: "POST",
       body: JSON.stringify(newInvoice),
-      headers: { "Content-type": "Application/json",
-                  Authorization: `Bearer ${token}` }
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => {
         if (res.status === 201) {
@@ -47,11 +50,18 @@ export const AddInvoice = () => {
       })
       .then((data) => {
         dispatch(invoicesActions.addInvoice(data));
+        navigate("/")
       });
+
+    // axiosInstance.post("", newInvoice).then((data) => {
+    //   console.log(data);
+    //   dispatch(invoicesActions.addInvoice(data.data));
+    // });
   };
 
   return (
     <Container>
+      <SideBar/>
       <div className="add-invoice">
         <InvoiceContentWrapper className="add-invoice--content">
           <h1 className="add-invoice__title">New Invoice</h1>

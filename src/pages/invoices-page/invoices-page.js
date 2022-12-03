@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, SideBar, SiteHeader } from "../../components";
 import { InvoiceList } from "../../components/invoice-list/invoice-list";
 import { Spinner } from "../../components/spinner/spinner";
-import { API_URL } from "../../consts";
+import { axiosInstance } from "../../services/axios";
 import { invoicesActions } from "../../store/invoices";
 
 export const InvoicesPage = () => {
@@ -12,15 +12,23 @@ export const InvoicesPage = () => {
     (state) => state.invoices
   );
 
+  // useEffect(() => {
+  //   if (!invoicesList) {
+  //     dispatch(invoicesActions.setLoading());
+  //     fetch(API_URL)
+  //       .then((res) => res.json())
+  //       .then((data) => dispatch(invoicesActions.setInovices(data)))
+  //       .catch(dispatch(invoicesActions.setError(error)));
+  //   }
+  // }, []);
+
   useEffect(() => {
     if (!invoicesList) {
-      dispatch(invoicesActions.setLoading());
-      fetch(API_URL)
-        .then((res) => res.json())
-        .then((data) => dispatch(invoicesActions.setInovices(data)))
-        .catch(dispatch(invoicesActions.setError(error)));
+      axiosInstance.get("").then((data) => {
+        dispatch(invoicesActions.setInovices(data.data))
+      })
     }
-  }, []);
+  }, [])
 
   if (loading) return <Spinner />;
 
