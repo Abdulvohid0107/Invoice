@@ -1,10 +1,9 @@
 import axios from "axios";
-import { API_URL } from "../consts";
 
 export const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: "http://167.235.158.238:3001",
   headers: {
     "Content-type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token") || ""}`
-  }
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  },
 })

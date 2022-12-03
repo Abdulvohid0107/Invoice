@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, SideBar, SiteHeader } from "../../components";
 import { InvoiceList } from "../../components/invoice-list/invoice-list";
@@ -8,6 +8,9 @@ import { invoicesActions } from "../../store/invoices";
 
 export const InvoicesPage = () => {
   const dispatch = useDispatch();
+
+  const [filterValue, setFilterValue] = useState()
+
   const { invoicesList, loading, error } = useSelector(
     (state) => state.invoices
   );
@@ -23,19 +26,31 @@ export const InvoicesPage = () => {
   // }, []);
 
   useEffect(() => {
-    if (!invoicesList) {
-      axiosInstance.get("").then((data) => {
+ 
+    // if (filterValue === "") filterValue = ""
+    // else if (filterValue === "true") filterValue = "true"
+    // else if (filterValue === "false") filterValue = "false"
+    // if (!invoicesList) {
+      axiosInstance.get(`/invoices`, {
+        params: {
+          paid_like: filterValue
+        }
+      }).then((data) => {
         dispatch(invoicesActions.setInovices(data.data))
       })
-    }
-  }, [])
+    // } 
+  }, [filterValue])
+
+  const handleFilterChange = (evt) => {
+    setFilterValue(evt.target.value)
+  }
 
   if (loading) return <Spinner />;
 
   return (
     <>
       <header>
-        <SiteHeader></SiteHeader>
+        <SiteHeader onChange={handleFilterChange}></SiteHeader>
       </header>
       <main>
         <SideBar />

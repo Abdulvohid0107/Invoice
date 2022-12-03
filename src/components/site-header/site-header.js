@@ -5,11 +5,9 @@ import { Button } from "../button";
 import { Container } from "../container";
 import "./site-header.scss";
 
-
-export const SiteHeader = () => {
+export const SiteHeader = ({ onChange }) => {
   const { invoicesList } = useSelector((state) => state.invoices);
-  const user = useSelector((state) => state.user.user)
-
+  const user = useSelector((state) => state.user.user);
 
   return (
     <Container>
@@ -31,18 +29,29 @@ export const SiteHeader = () => {
           </div>
 
           <div className="site-header__filter-btn-wrapper">
-            <select name="filter" className="site-header__select">
-              <option className="site-header__option" value="1">
+            <select
+              onChange={onChange}
+              name="filter"
+              className="site-header__select"
+            >
+              <option className="site-header__option" value="">
                 All
               </option>
-              <option className="site-header__option" value="2">
+              <option className="site-header__option" value="false">
                 Pending
               </option>
-              <option className="site-header__option" value="3">
+              <option className="site-header__option" value="true">
                 Paid
               </option>
             </select>
-            <Button to={user ? "/add" : "/login"} children={"New Invoice"} className="site-header--button" />
+            <Button
+              to={user ? "/add" : "/login"}
+              state={{
+                redirect: !user && "/add",
+              }}
+              children={"New Invoice"}
+              className="site-header--button"
+            />
           </div>
         </div>
       </div>

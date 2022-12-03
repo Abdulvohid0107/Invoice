@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../consts";
 import {
   Button,
-  Container,
-  SideBar,
-  GoBack,
+  Container, GoBack,
   InvoiceContentWrapper,
-  PaidStatus,
+  PaidStatus, SideBar
 } from "../../components";
-import "./view-invoice-page.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { API_URL } from "../../consts";
+import { axiosInstance } from "../../services/axios";
 import { invoicesActions } from "../../store/invoices/invoices.sclice";
+import "./view-invoice-page.scss";
 
 export const ViewInvoicePage = () => {
   const { id } = useParams();
   const [currentInvoice, setCurrentInvoice] = useState();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.user)
-  const navigate = useNavigate()
-
+  const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(API_URL + "/" + id)
@@ -40,21 +38,46 @@ export const ViewInvoicePage = () => {
   }
 
   const handleDeleteClick = () => {
-    fetch(API_URL + "/" + id, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "Application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
-      if (res.status === 200) {
-        return res.json()
-      }
-      return Promise.reject(res)
-    }).then(() => {
-      dispatch(invoicesActions.deleteInvoice(id))
-      navigate("/")
-    })
+    // fetch(API_URL + "/" + id, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-type": "Application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }).then((res) => {
+    //   if (res.status === 200) {
+    //     return res.json()
+    //   }
+    //   return Promise.reject(res)
+    // }).then(() => {
+    //   dispatch(invoicesActions.deleteInvoice(id))
+    //   navigate("/")
+    // })
+
+    axiosInstance.delete(`/invoices/${id}`).then(() => {
+      dispatch(invoicesActions.deleteInvoice(id));
+      navigate("/");
+    });
+  };
+
+  const handleMarkClick = () => {
+
+    const markPaid = {
+      userId: 1,
+      paid: true
+    }
+
+    // fetch(API_URL + "/" + id, {
+    //   method: "PATCH",
+    //   headers: {
+    //         "Content-type": "Application/json",
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //   body: JSON.stringify(markPaid)
+    // })
+    // console.log(markPaid);
+
+    axiosInstance.patch(`invoices/${id}`, markPaid).then((data) => setCurrentInvoice(data.data))
   }
 
   return (
@@ -69,17 +92,32 @@ export const ViewInvoicePage = () => {
             <PaidStatus>{currentInvoice.paid ? "Paid" : "Pending"}</PaidStatus>
           </div>
           <div className="view-page__buttons-wrapper">
-            <Button to={user? "edit" : "/login"} className="view-page--edit-btn">Edit</Button>
-            <Button onClick={handleDeleteClick} className="view-page--delete-btn">Delete</Button>
-            {!currentInvoice.paid ? <Button className="view-page--mark-btn">Mark as Paid</Button> : "" }
-            
+            <Button
+              to={user ? "edit" : "/login"}
+              className="view-page--edit-btn"
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={handleDeleteClick}
+              className="view-page--delete-btn"
+            >
+              Delete
+            </Button>
+            {!currentInvoice.paid ? (
+              <Button onClick={handleMarkClick} className="view-page--mark-btn">Mark as Paid</Button>
+            ) : (
+              ""
+            )}
           </div>
         </InvoiceContentWrapper>
 
         <InvoiceContentWrapper className="view-page--invoice-wrapper">
           <ul className="view-page__list">
             <li className="view-page__item view-page__item--id">
-              <h3 className="view-page__item-title view-page__item-title--id">{currentInvoice.id}</h3>
+              <h3 className="view-page__item-title view-page__item-title--id">
+                {currentInvoice.id}
+              </h3>
               <p className="view-page__item-label">
                 {currentInvoice.description}
               </p>

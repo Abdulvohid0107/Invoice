@@ -1,14 +1,15 @@
 import { Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import {
   Button,
   Container,
   Input,
-  InvoiceContentWrapper,
+  InvoiceContentWrapper
 } from "../../components";
+import { axiosInstance } from "../../services/axios";
 import { userActions } from "../../store/user";
 import "./login.scss";
 
@@ -17,6 +18,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState("")
+  const location = useLocation()
 
   const token = useSelector(state => state.user.token)
 
@@ -41,10 +43,12 @@ export const Login = () => {
     }).then(data => {
       console.log(data);
       dispatch(userActions.setUser(data));
-      navigate("/");
+      axiosInstance.defaults.headers.Authorization = `Bearer ${data.accessToken}`
     })
     .catch(err => {
       setError("Something went wrong :(")
+    }).finally(() => {
+      navigate(location.state?.redirect || "/");
     });
 
   };

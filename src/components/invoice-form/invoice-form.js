@@ -5,7 +5,7 @@ import { InvoiceSelect } from "../../invoice-select/invoice-select";
 import { Input } from "../input";
 import "./invoice-form.scss";
 
-export const InoviceForm = ({children, onSubmit}) => {
+export const InoviceForm = ({children, onSubmit, initialValues = {}}) => {
 
   const nameRef = useRef()
 
@@ -15,14 +15,15 @@ export const InoviceForm = ({children, onSubmit}) => {
 
   return (
     <Formik
-      initialValues={{
-        clientname: "React",
-        email: "r@gmail.com",
-        project: "invoice",
-        price: "700",
-        date: "2022-12-01",
-        terms: "",
-      }}
+    initialValues={initialValues}
+      // initialValues={{
+      //   clientname: "",
+      //   email: "r@gmail.com",
+      //   project: "invoice",
+      //   price: "700",
+      //   date: "2022-12-01",
+      //   terms: "7",
+      // }}
       validationSchema={yup.object().shape({
         clientname: yup
           .string()
