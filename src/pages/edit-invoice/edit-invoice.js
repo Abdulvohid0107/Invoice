@@ -23,7 +23,7 @@ export const EditInvoice = () => {
   const navigate = useNavigate();
   const [currentInvoice, setCurrentInvoice] = useState();
 
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
   const { error, loading } = useSelector((state) => state.invoices);
   useEffect(() => {
