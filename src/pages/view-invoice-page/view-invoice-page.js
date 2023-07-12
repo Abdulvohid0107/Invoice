@@ -3,22 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
-  Container, GoBack,
+  Container,
+  ErrorMessage,
+  GoBack,
   InvoiceContentWrapper,
-  PaidStatus, SideBar
+  PaidStatus,
+  SideBar,
 } from "../../components";
-import { API_URL } from "../../consts";
 import { axiosInstance } from "../../services";
 import { invoicesActions } from "../../store";
 import "./view-invoice-page.scss";
 
 export const ViewInvoicePage = () => {
   const { id } = useParams();
-  const [currentInvoice, setCurrentInvoice] = useState();
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [currentInvoice, setCurrentInvoice] = useState();
+
+  // const token = useSelector((state) => state.user.token);
+  const user = useSelector((state) => state.user.user);
+  const { error } = useSelector((state) => state.invoices);
 
   useEffect(() => {
     // fetch(API_URL + "/" + id)
@@ -32,12 +37,15 @@ export const ViewInvoicePage = () => {
     //     setCurrentInvoice(data);
     //   });
 
-    axiosInstance.get(`/invoices/${id}`).then(data => setCurrentInvoice(data.data))
-
+    axiosInstance
+      .get(`/invoices/${id}`)
+      .then((data) => setCurrentInvoice(data.data));
   }, [id]);
 
   if (!currentInvoice) {
-    return <p>error</p>;
+    return (
+      <p className="view-page__error">This kind of invoice was not found!</p>
+    );
   }
 
   const handleDeleteClick = () => {
@@ -57,18 +65,22 @@ export const ViewInvoicePage = () => {
     //   navigate("/")
     // })
 
-    axiosInstance.delete(`/invoices/${id}`).then(() => {
-      dispatch(invoicesActions.deleteInvoice(id));
-      navigate("/");
-    });
+    axiosInstance
+      .delete(`/invoices/${id}`)
+      .then(() => {
+        dispatch(invoicesActions.deleteInvoice(id));
+        navigate("/");
+      })
+      .catch((err) => {
+        dispatch(invoicesActions.setError(err));
+      });
   };
 
   const handleMarkClick = () => {
-
     const markPaid = {
       userId: user.id,
-      paid: true
-    }
+      paid: true,
+    };
 
     // fetch(API_URL + "/" + id, {
     //   method: "PATCH",
@@ -80,8 +92,13 @@ export const ViewInvoicePage = () => {
     // })
     // console.log(markPaid);
 
-    axiosInstance.patch(`invoices/${id}`, markPaid).then((data) => setCurrentInvoice(data.data))
-  }
+    axiosInstance
+      .patch(`invoices/${id}`, markPaid)
+      .then((data) => setCurrentInvoice(data.data))
+      .catch((err) => {
+        dispatch(invoicesActions.setError(err));
+      });
+  };
 
   return (
     <Container>
@@ -105,20 +122,22 @@ export const ViewInvoicePage = () => {
               Edit
             </Button>
             <Button
-              to={user? "" : "/login"}
+              to={user ? "" : "/login"}
               onClick={handleDeleteClick}
               className="view-page--delete-btn"
             >
               Delete
             </Button>
             {!currentInvoice.paid ? (
-              <Button onClick={handleMarkClick} className="view-page--mark-btn">Mark as Paid</Button>
+              <Button onClick={handleMarkClick} className="view-page--mark-btn">
+                Mark as Paid
+              </Button>
             ) : (
               ""
             )}
           </div>
         </InvoiceContentWrapper>
-
+        {error ? <ErrorMessage /> : ""}
         <InvoiceContentWrapper className="view-page--invoice-wrapper">
           <ul className="view-page__list">
             <li className="view-page__item view-page__item--id">

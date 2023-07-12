@@ -49,9 +49,10 @@ export const SiteHeader = ({ onChange }) => {
               state={{
                 redirect: !user && "/add",
               }}
-              children={"New Invoice"}
-              className="site-header--button"
-            />
+              className="site-header__button"
+            >
+              New Invoice
+            </Button>
           </div>
         </div>
       </div>

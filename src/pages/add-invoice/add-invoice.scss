@@ -12,29 +12,29 @@
   width: 100%;
 }
 
-.add-invoice__title{
+.add-invoice__title {
   margin: 0;
   margin-bottom: 35px;
   font-size: 24px;
 }
 
-.add-invoice--add-btn{
+.add-invoice__add-btn {
   padding: 16px 24px;
 }
 
-.add-invoice--discard-btn{
+.add-invoice__discard-btn {
   padding: 16px 24px;
-  color:#7E88C3;
+  color: #7E88C3;
   background: #F9FAFE;
   text-decoration: none;
 }
 
-.add-invoice__btn-wrapper{
+.add-invoice__btn-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.add-invoice--go-back{
+.add-invoice__go-back {
   margin-left: 50px;
 }

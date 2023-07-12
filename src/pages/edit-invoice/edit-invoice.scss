@@ -1,25 +1,31 @@
-.edit-invoice{
+.edit-invoice {
   margin-bottom: 50px;
 }
 
-.edit-invoice__id{
+.edit-invoice__title{
+  margin: 0;
+  margin-bottom: 35px;
+  margin-top: 51px;
+}
+
+.edit-invoice__id {
   color: #888EB0;
 }
 
-.edit-invoice__btn-wrapper{
+.edit-invoice__btn-wrapper {
   display: flex;
   gap: 8px;
   margin-left: auto;
 }
 
-.edit-invoice--cancel-btn{
+.edit-invoice__cancel-btn {
   padding: 17px 25px;
-  background:#F9FAFE;
+  background: #F9FAFE;
   color: #7E88C3;
   text-decoration: none;
 }
 
-.edit-invoice--changes-btn{
+.edit-invoice__changes-btn {
   padding: 17px 25px;
 
 }

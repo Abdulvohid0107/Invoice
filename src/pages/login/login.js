@@ -1,13 +1,13 @@
 import { Form, Formik } from "formik";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import {
   Button,
   Container,
   Input,
-  InvoiceContentWrapper,
+  InvoiceContentWrapper
 } from "../../components";
 import { axiosInstance } from "../../services";
 import { userActions } from "../../store";
@@ -17,10 +17,10 @@ export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [error, setError] = useState("");
+  const [error] = useState("");
   const location = useLocation();
 
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
 
   const handleLoginSubmit = (values) => {
     const user = {

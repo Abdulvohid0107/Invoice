@@ -10,7 +10,6 @@ import {
   InvoiceContentWrapper,
   SideBar,
 } from "../../components";
-import { API_URL } from "../../consts";
 import { axiosInstance } from "../../services";
 import { invoicesActions } from "../../store";
 import "./edit-invoice.scss";
@@ -26,9 +25,7 @@ export const EditInvoice = () => {
 
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
-  const { error } = useSelector(
-    (state) => state.invoices
-  );
+  const { error, loading } = useSelector((state) => state.invoices);
   useEffect(() => {
     // fetch(API_URL + "/" + id)
     //   .then((res) => {
@@ -40,14 +37,12 @@ export const EditInvoice = () => {
     //   .then((data) => {
     //     setCurrentInvoice(data);
     //   });
-
     axiosInstance
       .get(`/invoices/${id}`)
       .then((data) => setCurrentInvoice(data.data));
   }, [id]);
 
   if (!currentInvoice) return <p>not found</p>;
-
 
   const handleFormSubmit = (values) => {
     const editInvoice = {
@@ -82,12 +77,14 @@ export const EditInvoice = () => {
     //     navigate("/");
     //   });
 
+    dispatch(invoicesActions.setLoading())
     axiosInstance
       .put(`/invoices/${id}`, editInvoice)
       .then(
         (data) => dispatch(invoicesActions.editInvoice(data.data)),
         navigate(`/view-invoice/${id}`)
-      ).catch((err) => invoicesActions.setError(err));
+      )
+      .catch((err) => invoicesActions.setError(err));
   };
 
   return (
@@ -95,8 +92,9 @@ export const EditInvoice = () => {
       <SideBar />
       <GoBack to={`/view-invoice/${id}`} />
       <div className="edit-invoice">
+        {loading ? "loading" : ""}
         <InvoiceContentWrapper>
-          <h1>
+          <h1 className="edit-invoice__title">
             Edit <span className="edit-invoice__id">#</span>
             {currentInvoice.id}
           </h1>
@@ -113,15 +111,15 @@ export const EditInvoice = () => {
           >
             <div className="edit-invoice__btn-wrapper">
               <Button
-                className="edit-invoice--cancel-btn"
+                className="edit-invoice__cancel-btn"
                 to={`/view-invoice/${id}`}
               >
                 Cancel
               </Button>
-              <Button className="edit-invoice--changes-btn" type={"submit"}>
+              <Button className="edit-invoice__changes-btn" type={"submit"}>
                 Save Changes
               </Button>
-              {error && <ErrorMessage/>}
+              {error && <ErrorMessage />}
             </div>
           </InoviceForm>
         </InvoiceContentWrapper>

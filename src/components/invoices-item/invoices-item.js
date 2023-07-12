@@ -5,9 +5,9 @@ import "./invoices-item.scss";
 
 export const InvoiceItem = (props) => {
   const {
-    invoice: { to, price, id, paid, dueDate },
+    invoice: { to, price, id, paid, due_date },
   } = props;
-  // userID, paid, email, dueDate, term, createdDate, description,
+  // userID, paid, email, due_date, term, createdDate, description,
 
   return (
     <li className="invoices-item">
@@ -20,7 +20,7 @@ export const InvoiceItem = (props) => {
             </h3>
             <p className="invoices-item__due-date">
               <span className="invoices-item__due">Due</span>
-              {dueDate}
+              {due_date}
             </p>
             <p className="invoices-item__to">{to}</p>
           </div>

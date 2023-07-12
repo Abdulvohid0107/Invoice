@@ -38,6 +38,7 @@ export const { actions: invoicesActions, reducer: invoicesReducer } =
       },
 
       editInvoice: (state, { payload }) => {
+        state.loading = false;
         const invoicesList = state.invoicesList;
         if (invoicesList) {
           const editingItemIndex = invoicesList.findIndex(

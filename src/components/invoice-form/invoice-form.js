@@ -28,12 +28,12 @@ export const InoviceForm = ({children, onSubmit, initialValues = {}}) => {
         clientname: yup
           .string()
           .required("Can't be empty")
-          .min(3, "maximum 3 symbols")
+          .min(3, "maximum 3 symbols")  
           .max(50, "maximum 50 symbols"),
 
         email: yup.string().required("Can't be empty").email("write an email"),
         date: yup.date().required("Can't be empty"),
-        // terms: yup.number().required(),
+        terms: yup.number().required(),
         project: yup.string(),
         price: yup
           .number("Must be a number")

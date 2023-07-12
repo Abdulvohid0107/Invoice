@@ -11,6 +11,7 @@ import {
 } from "../../components";
 import { axiosInstance } from "../../services";
 import { invoicesActions } from "../../store";
+import "./invoices-page.scss"
 
 export const InvoicesPage = () => {
   const dispatch = useDispatch();
@@ -40,9 +41,9 @@ export const InvoicesPage = () => {
     axiosInstance
       .get(`/invoices`, {
         params: {
-          paid: filterValue,
+          paid_like: filterValue ? filterValue : null,
         },
-      })
+      })  
       .then((data) => {
         dispatch(invoicesActions.setInovices(data.data));
       })
@@ -57,10 +58,8 @@ export const InvoicesPage = () => {
     setFilterValue(evt.target.value);
   };
 
-  if (loading) return <Spinner />;
-
   return (
-    <>
+    <div className="invoices-page">
       <header>
         <SiteHeader onChange={handleFilterChange}></SiteHeader>
       </header>
@@ -68,10 +67,11 @@ export const InvoicesPage = () => {
         <SideBar />
         <Container>
           {invoicesList?.length === 0 ? <NoInvoice /> : ""}
+          {loading ? <Spinner/> : ""}
           <InvoiceList />
           {error && <ErrorMessage />}
         </Container>
       </main>
-    </>
+    </div>
   );
 };

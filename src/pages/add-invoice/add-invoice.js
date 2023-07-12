@@ -9,7 +9,6 @@ import {
   InvoiceContentWrapper,
   SideBar,
 } from "../../components";
-import { API_URL } from "../../consts";
 import { axiosInstance } from "../../services";
 import { invoicesActions } from "../../store";
 import "./add-invoice.scss";
@@ -21,24 +20,20 @@ export const AddInvoice = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
-  const { error } = useSelector(
-    (state) => state.invoices
-  );
+  const { error } = useSelector((state) => state.invoices);
 
   const handleFormSubmit = (values) => {
     const newInvoice = {
       userId: user.id,
-      paid: false,
+      // paid: false,
       email: values.email,
       to: values.clientname,
       dueDate: values.date,
       term: values.terms,
-      createdDate: time,
       description: values.project,
       price: values.price,
-      id: Math.floor(Math.random() * 1000),
+      createdDate: time,
     };
 
     // fetch(API_URL, {
@@ -60,17 +55,22 @@ export const AddInvoice = () => {
     //     navigate("/")
     //   });
 
-    axiosInstance.post("/invoices", newInvoice).then((data) => {
-      dispatch(invoicesActions.addInvoice(data.data));
-      navigate("/");
-    }).catch((err) => dispatch(invoicesActions.setError(err)));
+    axiosInstance
+      .post("/invoices", newInvoice)
+      .then((data) => {
+        dispatch(invoicesActions.addInvoice(data.data));
+      })
+      .catch((err) => dispatch(invoicesActions.setError(err)))
+      .finally(() => {
+        if (!error) return navigate("/");
+      });
   };
 
   return (
     <Container>
       <SideBar />
       <div className="add-invoice">
-        <GoBack to={"/"} className="add-invoice--go-back" />
+        <GoBack to={"/"} className="add-invoice__go-back" />
         <InvoiceContentWrapper className="add-invoice--content">
           <h1 className="add-invoice__title">New Invoice</h1>
           <InoviceForm
@@ -85,15 +85,15 @@ export const AddInvoice = () => {
             }}
           >
             <div className="add-invoice__btn-wrapper">
-              <Button to={"/"} className="add-invoice--discard-btn">
+              <Button to={"/"} className="add-invoice__discard-btn">
                 Discard
               </Button>
-              <Button type="submit" className="add-invoice--add-btn">
+              <Button type="submit" className="add-invoice__add-btn">
                 Save & Send
               </Button>
             </div>
           </InoviceForm>
-              {error && <ErrorMessage/>}
+          {error && <ErrorMessage />}
         </InvoiceContentWrapper>
       </div>
     </Container>
