@@ -9,6 +9,7 @@ import {
   InvoiceList,
   Spinner,
 } from "../../components";
+import { useDebounce } from "../../hooks/useDebounce";
 import { axiosInstance } from "../../services";
 import { invoicesActions } from "../../store";
 import "./invoices-page.scss"
@@ -21,6 +22,9 @@ export const InvoicesPage = () => {
   const { invoicesList, loading, error } = useSelector(
     (state) => state.invoices
   );
+
+  const debauncedValue = useDebounce(filterValue, 500)
+  
 
   // useEffect(() => {
   //   if (!invoicesList) {
@@ -41,7 +45,7 @@ export const InvoicesPage = () => {
     axiosInstance
       .get(`/invoices`, {
         params: {
-          paid_like: filterValue ? filterValue : null,
+          paid_like: debauncedValue,
         },
       })  
       .then((data) => {
@@ -52,7 +56,7 @@ export const InvoicesPage = () => {
         console.log(dispatch(invoicesActions.setError(err)));
       });
     // }
-  }, [filterValue]);
+  }, [debauncedValue, dispatch]);
 
   const handleFilterChange = (evt) => {
     setFilterValue(evt.target.value);
