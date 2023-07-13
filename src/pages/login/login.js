@@ -66,8 +66,8 @@ export const Login = () => {
         <h1 className="login__title">Login</h1>
         <Formik
           initialValues={{
-            email: "nurulloh23@gmail.com",
-            password: "nurulloh23",
+            email: "",
+            password: "",
           }}
           validationSchema={yup.object().shape({
             email: yup.string().email(),

@@ -16,11 +16,11 @@ export const InvoiceItem = (props) => {
           <div className="invoices-item__info-wrapper">
             <h3 className="invoices-item__id">
               <span className="invoices-item__id-span">#</span>
-              {id}
+              {id?.slice(0, 6)}
             </h3>
             <p className="invoices-item__due-date">
               <span className="invoices-item__due">Due</span>
-              {due_date}
+              {due_date?.slice(0, 10)}
             </p>
             <p className="invoices-item__to">{to}</p>
           </div>

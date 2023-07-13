@@ -116,7 +116,7 @@ export const ViewInvoicePage = () => {
               to={user ? "edit" : "/login"}
               className="view-page--edit-btn"
               state={{
-                redirect: !user && "/add",
+                redirect: !user && "/edit",
               }}
             >
               Edit
@@ -142,7 +142,7 @@ export const ViewInvoicePage = () => {
           <ul className="view-page__list">
             <li className="view-page__item view-page__item--id">
               <h3 className="view-page__item-title view-page__item-title--id">
-                {currentInvoice.id}
+              <span className="invoices-item__id-span">#</span>{currentInvoice.id?.slice(0, 6)}
               </h3>
               <p className="view-page__item-label">
                 {currentInvoice.description}
@@ -151,7 +151,7 @@ export const ViewInvoicePage = () => {
             <li className="view-page__item">
               <p className="view-page__item-label">Invoice Date</p>
               <p className="view-page__item-title">
-                {currentInvoice.createdDate}
+                {currentInvoice.created_date?.slice(0, 10)}
               </p>
             </li>
             <li className="view-page__item">
@@ -164,7 +164,7 @@ export const ViewInvoicePage = () => {
             </li>
             <li className="view-page__item view-page__item--payment">
               <p className="view-page__item-label">Payment Due</p>
-              <p className="view-page__item-title">{currentInvoice.dueDate}</p>
+              <p className="view-page__item-title">{currentInvoice.due_date?.slice(0, 10)}</p>
             </li>
           </ul>
           <InvoiceContentWrapper className="view-page--money-wrapper">
