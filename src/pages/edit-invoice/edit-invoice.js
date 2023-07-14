@@ -90,13 +90,13 @@ export const EditInvoice = () => {
   return (
     <Container>
       <SideBar />
-      <GoBack to={`/view-invoice/${id}`} />
+      <GoBack className="edit-invoice__go-back" to={`/view-invoice/${id}`} />
       <div className="edit-invoice">
         {loading ? "loading" : ""}
         <InvoiceContentWrapper>
           <h1 className="edit-invoice__title">
             Edit <span className="edit-invoice__id">#</span>
-            {currentInvoice.id}
+            {currentInvoice.id.slice(0, 6)}
           </h1>
           <InoviceForm
             onSubmit={handleFormSubmit}

@@ -49,3 +49,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+@media only screen and (max-width: 400px) {
+  .input {
+    margin-bottom: 15px;
+  }
+}

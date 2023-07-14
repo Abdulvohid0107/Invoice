@@ -12,7 +12,7 @@ export const InvoiceItem = (props) => {
   return (
     <li className="invoices-item">
       <Link to={`/view-invoice/${id}`}>
-        <InvoiceContentWrapper>
+        <InvoiceContentWrapper className="invoice-item__content-wrapper">
           <div className="invoices-item__info-wrapper">
             <h3 className="invoices-item__id">
               <span className="invoices-item__id-span">#</span>

@@ -38,3 +38,70 @@
 .add-invoice__go-back {
   margin-left: 50px;
 }
+
+@media only screen and (max-width: 870px) {
+  .add-invoice--content {
+    margin-left: 100px;
+  }
+
+  .add-invoice__go-back {
+    margin-left: 100px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .add-invoice--content {
+    margin: 0 auto;
+  }
+
+  .add-invoice__go-back {
+    margin-left: 20px;
+    margin-top: 100px;
+  }
+
+  .add-invoice{
+    margin-bottom: 100px;
+  }
+}
+
+@media only screen and (max-width: 670px) {
+  .add-invoice--content {
+    padding: 30px 20px;
+    width: 500px;
+  }
+
+  .add-invoice__go-back {
+    margin-left: 40px;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .add-invoice--content {
+    padding: 30px 20px;
+    width: 350px;
+  }
+
+  .add-invoice__go-back {
+    margin-left: 40px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .add-invoice__go-back {
+    margin-left: 20px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .add-invoice__title {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .add-invoice--content {
+    padding: 30px 20px;
+    width: 300px;
+  }
+
+  
+}

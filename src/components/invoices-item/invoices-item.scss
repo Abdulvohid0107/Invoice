@@ -18,7 +18,7 @@
     transform: scale(1.1);
   }
 
-  &::after{
+  &::after {
     content: '';
     position: absolute;
     background: url("../../assets/icons/arrow.svg") no-repeat center center;
@@ -76,4 +76,70 @@
   font-weight: 700;
   line-height: 24px;
   color: #0C0E16;
+}
+
+@media only screen and (max-width: 922px) {
+  .invoices-item {
+    width: 600px;
+
+    &::after {
+      right: 20px;
+      top: 24px;
+    }
+  }
+
+  .invoice-item__content-wrapper {
+    padding: 10px 20px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .invoices-item {
+    width: 100%;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+}
+
+@media only screen and (max-width: 730px) {
+  .invoices-item__info-wrapper {
+    gap: 30px
+  }
+
+  .invoice-item__content-wrapper {
+    padding: 10px 20px;
+    padding-left: 30px;
+  }
+
+  .invoices-item__money-wrapper {
+    gap: 20px;
+  }
+
+  .invoices-item__info-wrapper {
+    gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .invoices-item__info-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .invoices-item__money-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .invoices-item {
+    &::after {
+      right: 20px;
+      top: 46px;
+    }
+  }
 }

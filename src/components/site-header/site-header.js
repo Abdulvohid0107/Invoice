@@ -24,11 +24,11 @@ export const SiteHeader = ({ onChange }) => {
             </picture>
             <h1 className="visually-hidden">Invoices</h1>
             <p className="site-header__invoice-length">
-              There are {invoicesList?.length || 0} total invoices
+            <span className="site-header__invoice-length-span">There are</span> {invoicesList?.length || 0} <span className="site-header__invoice-length-span">total</span> invoices
             </p>
           </div>
 
-          <div className="site-header__filter-btn-wrapper">
+          <div className="sitess site-header__filter-btn-wrapper">
             <select
               onChange={onChange}
               name="filter"
@@ -51,7 +51,7 @@ export const SiteHeader = ({ onChange }) => {
               }}
               className="site-header__button"
             >
-              New Invoice
+              New <span className="site-header__button-span">Invoice</span>
             </Button>
           </div>
         </div>

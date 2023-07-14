@@ -27,5 +27,28 @@
 
 .edit-invoice__changes-btn {
   padding: 17px 25px;
+}
 
+@media only screen and (max-width: 970px) {
+  .edit-invoice {
+    margin-left: 100px;
+  }
+
+  .edit-invoice__go-back {
+    margin-left: 100px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .edit-invoice__go-back{
+    margin-top: 100px;
+  }
+
+  .edit-invoice {
+    margin: 0 auto;
+  }
+
+  .edit-invoice__go-back {
+    margin-left: 0;
+  }
 }

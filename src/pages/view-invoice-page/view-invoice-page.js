@@ -103,7 +103,7 @@ export const ViewInvoicePage = () => {
   return (
     <Container>
       <SideBar />
-      <GoBack to={"/"} />
+      <GoBack to={"/"} className="view-page__go-back" />
       <div className="view-page">
         <h1 className="visually-hidden">Viewing invoice in detail</h1>
         <InvoiceContentWrapper className="view-page--status-content-wrapper">
@@ -111,7 +111,7 @@ export const ViewInvoicePage = () => {
             <p className="view-page__status">Status</p>
             <PaidStatus>{currentInvoice.paid ? "Paid" : "Pending"}</PaidStatus>
           </div>
-          <div className="view-page__buttons-wrapper">
+          <div className="view-page__buttons-wrapper ">
             <Button
               to={user ? "edit" : "/login"}
               className="view-page--edit-btn"
@@ -171,8 +171,34 @@ export const ViewInvoicePage = () => {
             <p className="view-page__money-amount">Amount Due</p>
             <h3 className="view-page__money">£ {currentInvoice.price}</h3>
           </InvoiceContentWrapper>
+
         </InvoiceContentWrapper>
       </div>
+          <div className="view-page__buttons-wrapper view-page__buttons-wrapper-mobile">
+            <Button
+              to={user ? "edit" : "/login"}
+              className="view-page--edit-btn"
+              state={{
+                redirect: !user && "/edit",
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              to={user ? "" : "/login"}
+              onClick={handleDeleteClick}
+              className="view-page--delete-btn"
+            >
+              Delete
+            </Button>
+            {!currentInvoice.paid ? (
+              <Button onClick={handleMarkClick} className="view-page--mark-btn">
+                Mark as Paid
+              </Button>
+            ) : (
+              ""
+            )}
+          </div>
     </Container>
   );
 };

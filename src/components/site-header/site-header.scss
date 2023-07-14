@@ -29,11 +29,13 @@
   align-items: center;
 }
 
+
+
 .site-header__select {
   background-color: transparent;
   outline: none;
   border: none;
-  margin-right: 40px;
+  margin-right: 40px; 
   font-weight: 700;
 }
 
@@ -56,5 +58,26 @@
     margin-right: 16px;
     width: 32px;
     height: 32px;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  .site-header__button {
+    padding: 5px 10px 5px 5px;
+  }
+
+  .site-header__invoice-length-span,
+  .site-header__button-span{
+    display: none;
+  }
+
+  .site-header__title-img {
+    max-width: 84px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .site-header__select {
+    margin-right: 20px;
   }
 }

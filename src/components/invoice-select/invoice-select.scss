@@ -13,10 +13,23 @@
   width: 245px;
   transition: 0.3s ease all;
   font-weight: 700;
-  padding: 15px 15px 15px 20px;
+  padding: 17px 15px 17px 20px;
   margin-bottom: 23px;
 }
 
 .invoice-select__option {
   font-weight: 700;
+}
+
+@media only screen and (max-width: 540px) {
+  .invoice-select__select {
+    width: 140px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .invoice-select__select {
+    padding: 17px 10px 17px 10px;
+    width: 250px;
+  } 
 }
