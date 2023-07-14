@@ -9,6 +9,7 @@ import {
   InvoiceContentWrapper,
   PaidStatus,
   SideBar,
+  Spinner,
 } from "../../components";
 import { axiosInstance } from "../../services";
 import { invoicesActions } from "../../store";
@@ -23,7 +24,7 @@ export const ViewInvoicePage = () => {
 
   // const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
-  const { error } = useSelector((state) => state.invoices);
+  const { error, loading } = useSelector((state) => state.invoices);
 
   useEffect(() => {
     // fetch(API_URL + "/" + id)
@@ -36,18 +37,28 @@ export const ViewInvoicePage = () => {
     //   .then((data) => {
     //     setCurrentInvoice(data);
     //   });
-
+    dispatch(invoicesActions.setLoading(true));
     axiosInstance
       .get(`/invoices/${id}`)
-      .then((data) => setCurrentInvoice(data.data));
-  }, [id]);
+      .then((data) => {
+        setCurrentInvoice(data.data);
+        dispatch(invoicesActions.setLoading(false));
+      })
+      .catch((err) => {
+        dispatch(invoicesActions.setError(err));
+        console.log(dispatch(invoicesActions.setError(err)));
+      });
+  }, [id, dispatch]);
 
+  // if (loading) return <Spinner />;
   if (!currentInvoice) {
     return (
-      <p className="view-page__error">This kind of invoice was not found!</p>
+      // <p className="view-page__error">This kind of invoice was not found!</p>
+      <Spinner/>
     );
   }
 
+  
   const handleDeleteClick = () => {
     // fetch(API_URL + "/" + id, {
     //   method: "DELETE",
@@ -94,7 +105,7 @@ export const ViewInvoicePage = () => {
 
     axiosInstance
       .patch(`invoices/${id}`, markPaid)
-      .then((data) => setCurrentInvoice(data.data))
+      .then((data) => setCurrentInvoice({ ...currentInvoice, ...data.data }))
       .catch((err) => {
         dispatch(invoicesActions.setError(err));
       });
@@ -103,6 +114,7 @@ export const ViewInvoicePage = () => {
   return (
     <Container>
       <SideBar />
+      {/* {loading ? <Spinner/> : ""} */}
       <GoBack to={"/"} className="view-page__go-back" />
       <div className="view-page">
         <h1 className="visually-hidden">Viewing invoice in detail</h1>
@@ -142,7 +154,8 @@ export const ViewInvoicePage = () => {
           <ul className="view-page__list">
             <li className="view-page__item view-page__item--id">
               <h3 className="view-page__item-title view-page__item-title--id">
-              <span className="invoices-item__id-span">#</span>{currentInvoice.id?.slice(0, 6)}
+                <span className="invoices-item__id-span">#</span>
+                {currentInvoice.id?.slice(0, 6)}
               </h3>
               <p className="view-page__item-label">
                 {currentInvoice.description}
@@ -164,41 +177,42 @@ export const ViewInvoicePage = () => {
             </li>
             <li className="view-page__item view-page__item--payment">
               <p className="view-page__item-label">Payment Due</p>
-              <p className="view-page__item-title">{currentInvoice.due_date?.slice(0, 10)}</p>
+              <p className="view-page__item-title">
+                {currentInvoice.due_date?.slice(0, 10)}
+              </p>
             </li>
           </ul>
           <InvoiceContentWrapper className="view-page--money-wrapper">
             <p className="view-page__money-amount">Amount Due</p>
             <h3 className="view-page__money">£ {currentInvoice.price}</h3>
           </InvoiceContentWrapper>
-
         </InvoiceContentWrapper>
       </div>
-          <div className="view-page__buttons-wrapper view-page__buttons-wrapper-mobile">
-            <Button
-              to={user ? "edit" : "/login"}
-              className="view-page--edit-btn"
-              state={{
-                redirect: !user && "/edit",
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              to={user ? "" : "/login"}
-              onClick={handleDeleteClick}
-              className="view-page--delete-btn"
-            >
-              Delete
-            </Button>
-            {!currentInvoice.paid ? (
-              <Button onClick={handleMarkClick} className="view-page--mark-btn">
-                Mark as Paid
-              </Button>
-            ) : (
-              ""
-            )}
-          </div>
+      <div className="view-page__buttons-wrapper view-page__buttons-wrapper-mobile">
+        <Button
+          to={user ? "edit" : "/login"}
+          className="view-page--edit-btn"
+          state={{
+            redirect: !user && "/edit",
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          to={user ? "" : "/login"}
+          onClick={handleDeleteClick}
+          className="view-page--delete-btn"
+        >
+          Delete
+        </Button>
+        {!currentInvoice.paid ? (
+          <Button onClick={handleMarkClick} className="view-page--mark-btn">
+            Mark as Paid
+          </Button>
+        ) : (
+          ""
+        )}
+      </div>
     </Container>
   );
 };

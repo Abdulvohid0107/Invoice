@@ -82,7 +82,8 @@ export const EditInvoice = () => {
       .put(`/invoices/${id}`, editInvoice)
       .then(
         (data) => dispatch(invoicesActions.editInvoice(data.data)),
-        navigate(`/view-invoice/${id}`)
+        navigate(`/view-invoice/${id}`),
+        dispatch(invoicesActions.setLoading(false))
       )
       .catch((err) => invoicesActions.setError(err));
   };

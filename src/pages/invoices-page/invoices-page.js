@@ -41,7 +41,7 @@ export const InvoicesPage = () => {
     // else if (filterValue === "true") filterValue = "true"
     // else if (filterValue === "false") filterValue = "false"
     // if (!invoicesList) {
-    dispatch(invoicesActions.setLoading());
+    dispatch(invoicesActions.setLoading(true));
     axiosInstance
       .get(`/invoices`, {
         params: {
